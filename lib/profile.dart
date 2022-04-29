@@ -6,21 +6,21 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: new Center(
-            child: new Column(
+        body:   Center(
+            child:   Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        new Container(
+          Container(
             width: 120.0,
             height: 120.0,
-            margin:  EdgeInsets.symmetric(vertical: 20.0),
-            decoration: new BoxDecoration(
+            margin:  const EdgeInsets.symmetric(vertical: 20.0),
+            decoration:   const BoxDecoration(
                 shape: BoxShape.circle,
-                image: new DecorationImage(
+                image:   DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage('assets/jeethendra.jpg')))),
-        new Text("Pinku", textScaleFactor: 1.5),
+                    image: AssetImage('assets/sanchari.jpeg')))),
+          const Text("Pranav", textScaleFactor: 1.5),
       ],
     )));
   }

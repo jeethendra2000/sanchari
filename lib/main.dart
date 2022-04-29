@@ -1,10 +1,10 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:sanchari/profile.dart';
 import 'package:sanchari/search.dart';
-import 'package:sanchari/splash.dart';
 
-import 'home.dart';
+import 'package:sanchari/home.dart';
+import 'package:sanchari/notifications.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,19 +17,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
-      home: AnimatedSplashScreen(
-        splash: Splash(),
-        duration: 3000,
-        backgroundColor: const Color(0xffE3002C),
-        nextScreen: const MyHomePage(
-          title: 'Sanchari',
+        title: 'Sanchari',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
         ),
-      ),
-    );
+        home: AnimatedSplashScreen(
+            duration: 2000,
+            splash: Column(
+              children: const [
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/sanchari.jpeg'),
+                  radius: 50,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Sanchari",
+                  style: TextStyle(
+                      fontSize: 25, letterSpacing: 2, color: Colors.white),
+                )
+              ],
+            ),
+            splashIconSize: 140,
+            nextScreen: const MyHomePage(title: "Sanchari"),
+            splashTransition: SplashTransition.fadeTransition,
+            backgroundColor: const Color(0xffE3002C)));
   }
 }
 
@@ -43,57 +56,58 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  int _currentIndex = 0;
-
-  final tabs = [
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     Search(),
     Profile(),
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        backgroundColor: Color(0xffE3002C),
+        backgroundColor: const Color(0xffE3002C),
         actions: [
-          Icon(Icons.notifications),
-          Container(
-            width: 20,
-          )
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Notifications()),
+                );
+              },
+              icon: const Icon(Icons.notifications)),
         ],
       ),
-      body: tabs[_currentIndex],
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
-              backgroundColor: Colors.white),
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              title: Text('Search'),
-              backgroundColor: Colors.white),
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: Text('Profile'),
-              backgroundColor: Colors.white),
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+        currentIndex: _selectedIndex,
+        selectedItemColor: const Color(0xffE3002C),
+        onTap: _onItemTapped,
       ),
     );
   }
