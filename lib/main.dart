@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:sanchari/constants.dart';
 import 'package:sanchari/profile.dart';
 import 'package:sanchari/search.dart';
 
@@ -17,10 +18,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Sanchari',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
+        theme: kDarkTheme,
         home: AnimatedSplashScreen(
             duration: 2000,
             splash: Column(
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     Search(),
-    Profile(),
+    Notifications(),
   ];
 
   void _onItemTapped(int index) {
@@ -80,11 +80,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const Notifications()),
+                  MaterialPageRoute(builder: (context) => const Profile()),
                 );
               },
-              icon: const Icon(Icons.notifications)),
+              icon: const Icon(Icons.person)),
         ],
       ),
       body: Center(
@@ -101,8 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(Icons.notifications),
+            label: 'Notification',
           ),
         ],
         currentIndex: _selectedIndex,
