@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Sanchari',
-        theme: kDarkTheme,
+        theme: kLightTheme,
         home: AnimatedSplashScreen(
             duration: 2000,
             splash: Column(
